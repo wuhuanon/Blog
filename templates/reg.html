@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+		<meta charset="utf-8">
+		<link href="{% static 'css/reglogin.css' %}" rel='stylesheet' type='text/css' />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+	<div class="main">
+		<div class="header" >
+			<h1>用户注册</h1>
+		</div>
+		<p></p>
+			<form action="{% url 'blog:reg' %}" method="post">
+                {% csrf_token %}
+				<ul class="left-form">
+					<h2>用户名</h2>
+					<li>
+						{{ reg_form.username }}
+						<div class="clear"> </div>
+					</li>
+                    <h2>邮箱</h2>
+					<li>
+						{{ reg_form.email }}
+						<div class="clear"> </div>
+					</li> 
+{#					<li>#}
+{#						{{ reg_form.url }}#}
+{#						<div class="clear"> </div>#}
+{#					</li> #}
+					<li>
+                        <h2>密码</h2>
+                        {{ reg_form.password }}
+						<div class="clear"> </div>
+					</li>
+                    <input type="hidden" name="source_url" value="{{ request.META.HTTP_REFERER }}">
+					<input type="submit" value="注册">
+					<div class="clear"> </div>
+				</ul>
+				<div class="clear"> </div>
+			</form>
+	</div>
+</body>
+</html>

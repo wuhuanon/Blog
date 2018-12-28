@@ -1,0 +1,119 @@
+{% load staticfiles %}
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<title>销售系统</title>
+		<link href="{% static  'user/css/mui.min.css' %}" rel="stylesheet" />
+		<link href="{% static  'user/css/style.css' %}" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="{% static  'user/css/normalize.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static  'user/css/demo.css' %}" />
+		<link rel="stylesheet" type="text/css" href="{% static  'user/css/component.css' %}" />
+        <link href="{% static 'css/reglogin.css' %}" rel='stylesheet' type='text/css' />
+		<style type="text/css">
+			.mui-content>.mui-table-view:first-child {
+				margin-top: -1px;
+			}
+			.mui-bar{ box-shadow: none; }
+			.mui-table-view-cell.mui-active{background-color: #fff;}
+
+		</style>
+	</head>
+
+<body>
+		<header class="mui-bar mui-bar-nav xiaoshoubar_color">
+			<a href="" class="back mui-pull-left"><img class="xiaoshoubar_back" src="{% static  'user/images/back.png' %}"></a>
+			<h1 class="mui-title xiaoshoubar_title">用户注册</h1>
+		</header>
+
+		<section class="content" style="margin-left: 35px;text-align: center;">
+
+
+
+
+				<span class="input input--hoshi">
+
+
+                    {{ reg_form.username }}
+				</span>
+				<br>
+				<span class="input input--hoshi" style="background-color: #00c4cb">
+					{{ reg_form.email }}
+
+				</span>
+				<br>
+{#				<span class="input input--hoshi">#}
+{#					{{ reg_form.url }}#}
+{##}
+{#				</span>#}
+{#				<br>#}
+                <span class="input input--hoshi">
+					<li style="background-color: #00c4cb">
+                        {{ reg_form.password }}
+						<div class="clear"> </div>
+					</li>
+				</span>
+            <input type="hidden" name="source_url" value="{{ request.META.HTTP_REFERER }}">
+				<!-- <span class="input1 input--hoshi" style="">
+					<input class="input__field input__field--hoshi" style="border:none;background-color: #fff0;" type="text" id="input-7" />
+					<label class="input__label input__label--hoshi input__label--hoshi-color-1" for="input-7">
+						<span class="input__label-content input__label-content--hoshi">验证码</span>
+					</label>
+				</span>
+				<div class="mui-content password_fasongmima" >
+					<div class="mui-content-padded">
+						<button type="button" class="mui-btn mui-btn-outlined">发送验证码</button>
+					</div>
+				</div>
+
+				<br> -->
+				<div class="mui-content password_xiugaimima">
+		    		<div class="mui-content-padded">
+		        		<button type="submit" class="mui-btn mui-btn-primary mui-btn-block mui-btn-outlined oacolor" style="margin-top: 40px;color: #00c4cb;">确定注册</button>
+		   			 </div>
+				</div>
+                    </form>
+
+			</section>
+<script src="{% static  'user/js/mui.min.js' %}"></script>
+<script src="{% static  'user/js/classie.js' %}"></script>
+		<script>
+			(function() {
+				// trim polyfill : https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+				if (!String.prototype.trim) {
+					(function() {
+						// Make sure we trim BOM and NBSP
+						var rtrim = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+						String.prototype.trim = function() {
+							return this.replace(rtrim, '');
+						};
+					})();
+				}
+
+				[].slice.call( document.querySelectorAll( 'input.input__field' ) ).forEach( function( inputEl ) {
+					// in case the input is already filled..
+					if( inputEl.value.trim() !== '' ) {
+						classie.add( inputEl.parentNode, 'input--filled' );
+					}
+
+					// events:
+					inputEl.addEventListener( 'focus', onInputFocus );
+					inputEl.addEventListener( 'blur', onInputBlur );
+				} );
+
+				function onInputFocus( ev ) {
+					classie.add( ev.target.parentNode, 'input--filled' );
+				}
+
+				function onInputBlur( ev ) {
+					if( ev.target.value.trim() === '' ) {
+						classie.remove( ev.target.parentNode, 'input--filled' );
+					}
+				}
+			})();
+		</script>
+</body>
+</html>

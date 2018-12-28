@@ -1,0 +1,15 @@
+/*全局参数*/
+.xiaoshoubar_color{background: #05b1bb;}
+.xiaoshoubar_back{width: 55%;margin-top: 9px;}
+.xiaoshoubar_title{color: #b04b40;}
+
+/*忘记密码*/
+.password_fasongmima{background: #f7f7f7;margin-top: 35px;}
+.password_xiugaimima{background: #f7f7f7; width: 90%;}
+.oacolor{border-color: #00c4cb;}	
+
+/*登入界面*/
+.lonin_img{width: 40%;margin-top: 30px;}
+.login_input{margin-left: 35px;margin-top: -80px;}
+.login_input2{background: #58b2bd;}
+.login_p{float: right;margin-right: 25px;}
