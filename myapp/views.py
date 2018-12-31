@@ -1,6 +1,10 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.http import JsonResponse
 import logging
 from .models import *
+from django.views.generic.base import View
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.conf import settings
 from django.core.paginator import Paginator, InvalidPage, EmptyPage, PageNotAnInteger
 from django.db.models import Count
@@ -8,6 +12,7 @@ from .forms import *
 from django.contrib.auth import logout, login, authenticate
 from django.contrib.auth.hashers import make_password
 # Create your views here.
+
 def global_setting(request):
     # 站点基本信息
     SITE_URL = settings.SITE_URL
@@ -67,7 +72,7 @@ def tag(request):
     return render(request, "tag.html", locals())
 # 分页代码
 def getPage(request, article_list):
-    paginator = Paginator(article_list, )
+    paginator = Paginator(article_list, 6)
     try:
         page = int(request.GET.get('page', 1))
         article_list = paginator.page(page)
@@ -148,7 +153,7 @@ def do_reg(request):
             # 登录
             user.backend = 'django.contrib.auth.backends.ModelBackend' # 指定默认的登录验证方式
             login(request, user)
-            print(request.POST.get('source_url'))
+
             return redirect(request.POST.get('source_url'))
         else:
             return render(request, 'failure.html', {'reason': reg_form.errors})
@@ -167,11 +172,11 @@ def do_login(request):
             username = login_form.cleaned_data["username"]
             password = login_form.cleaned_data["password"]
             user = authenticate(username=username, password=password)
-            print(user)
+
             if user is not None:
                 user.backend = 'django.contrib.auth.backends.ModelBackend' # 指定默认的登录验证方式
                 login(request, user)
-                print(request.POST.get('source_url'))
+
                 return redirect(request.POST.get('source_url'))
             else:
                 return render(request, 'failure.html', {'reason': '登录验证失败'})
@@ -197,3 +202,15 @@ def category(request):
     article_list = getPage(request, article_list)
 
     return render(request, 'category.html', locals())
+
+class UploadImageView(LoginRequiredMixin, View):
+    def post(self, request):
+        # request.FILES保存用户上传的文件
+
+        image_form = ImageUpload(request.POST, request.FILES, instance=request.user)
+        if image_form.is_valid():
+            image_form.save()
+
+            return redirect(request.META['HTTP_REFERER'])
+        else:
+            return HttpResponse('{"status":"fail"}', content_type='application/json')

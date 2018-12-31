@@ -14,7 +14,7 @@
         <h2><a href="" rel="bookmark" title="{{ article.title }}">{{ article.title }}</a></h2>
         <div class="postmeta">
           <span class="postmeta_author">{{ article.user.username }}</span>
-          <span class="postmeta_category"><a href="" rel="category">{{ article.category.name }}</a></span>
+          <span class="postmeta_category"><a href="{% url 'blog:category' %}?cid={{ article.category.id }}" rel="category">{{ article.category.name }}</a></span>
           <span class="postmeta_time">{{ article.date_publish | date:'Y-m-d' }}</span>
         </div>
     </div>
@@ -97,8 +97,25 @@
     <p>
     <label for="email">Email ：</label>{{ request.user.email }}</p>
 
-    <p style="width: 150px;height: 50px">
-    <label for="url">个人图像</label><img alt="" src="{{ MEDIA_URL }}{{ comment.user.avatar}}" class="avatar avatar-32 photo" height="32" width="32"></p>
+    <p style="width: 200px;height: 50px">
+    <label for="url">个人头像(点击修改)</label><img alt="" src="{{ MEDIA_URL }}{{ request.user.avatar}}" class="avatar avatar-32 photo" height="32" width="32" onclick="avatarUp.click()" />
+         <form style="display: none" class="clearfix" id="jsAvatarForm" enctype="multipart/form-data" autocomplete="off" method="post" action="{% url 'blog:image_upload' %}" target='frameFile'>
+         {% csrf_token %}
+                        <label class="changearea" for="avatarUp">
+                            <span id="avatardiv" class="pic">
+
+                            </span>
+                            <span class="fl upload-inp-box" style="margin-left:70px;">
+                                <span class="button btn-green btn-w100" id="jsAvatarBtn">修改头像</span>
+                                    <input style="display: none" type="file" name="avatar" id="avatarUp" class="js-img-up" onchange="imgIn()"/>
+<input type="hidden" name="source_url" value="{{ SITE_URL }}article/?id={{ article.id }}">
+                                <input type="submit", value="上传", id="sub">
+                            </span>
+                        </label>
+
+                    </form>
+
+        </p>
         <form action="{% url 'blog:comment_post' %}" method="post">
         {% csrf_token %}
         <div style="display: none">
@@ -120,10 +137,20 @@
 
     <p>
         {{ comment_form.article }}
-        <input name="submit" type="submit" id="submit" tabindex="5" value="Submit" class="button" />
+        <input name="submit" type="submit" id="submit" tabindex="5" value="提交" class="button" />
     </p>
     </form>
     {% endif %}
+        <script>
+            function imgIn() {
 
+
+{#$.post('/image/upload/',function (data) {#}
+{#        console.log(data.data)#}
+{#     })#}
+    document.forms.submit();
+alert("图像修改成功")
+}
+        </script>
     </div>
 {% endblock %}

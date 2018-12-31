@@ -46,4 +46,8 @@ class CommentForm(forms.Form):
                                                     error_messages={"required":"评论不能为空",})
     article = forms.CharField(widget=forms.HiddenInput())
 
-
+# 图片上传表单
+class ImageUpload(forms.ModelForm):
+    class Meta:
+        model = User
+        fields=['avatar']

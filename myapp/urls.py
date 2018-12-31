@@ -8,7 +8,7 @@ urlpatterns = [
     url(r'^index/$', views.index, name='index'),
     url(r"^media/(?P<path>.*)$",serve,{"document_root": settings.MEDIA_ROOT,}),
     url(r'^xadmin/upload/(?P<dir_name>[^/]+)$', upload_image, name='upload_image'),
-
+    url(r'^image/upload/$', views.UploadImageView.as_view(), name='image_upload'),
     url(r'^archive/$', views.archive, name='archive'),
     url(r'^article/$', views.article, name='article'),
     url(r'^comment/post/$', views.comment_post, name='comment_post'),
